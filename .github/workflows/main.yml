@@ -2,7 +2,7 @@ name: Function Deployment
 
 env:
   AZURE_FUNCTIONAPP_NAME: app-livestreambot-prod
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: 'LivestreamBot'
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: 'src/LivestreamBot/LivestreamBot.Functions'
   DOTNET_VERSION: '3.1'
 
 # Controls when the action will run. Triggers the workflow on push or pull request
