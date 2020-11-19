@@ -1,16 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Cosmos.Table" Version="1.0.8" />
     <PackageReference Include="SimpleInjector" Version="5.1.0" />
     <PackageReference Include="Telegram.Bot" Version="15.7.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LivesteamBot.Bot\LivestreamBot.Bot.csproj" />
     <ProjectReference Include="..\LivestreamBot.Core\LivestreamBot.Core.csproj" />
   </ItemGroup>
 

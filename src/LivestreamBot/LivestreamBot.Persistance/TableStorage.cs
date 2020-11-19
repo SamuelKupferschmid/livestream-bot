@@ -1,6 +1,4 @@
 ﻿using Microsoft.Azure.Cosmos.Table;
-using Microsoft.Extensions.Configuration;
-
 using System;
 using System.Linq;
 using System.Threading;
@@ -23,13 +21,14 @@ namespace LivestreamBot.Persistance
         private readonly CloudTableClient client;
         private readonly CloudTable table;
 
-        public TableStorage(IConfiguration configuration)
+        public TableStorage()//IConfiguration configuration)
         {
             var entityName = typeof(TEntity).Name;
 
-            var account = CloudStorageAccount.Parse(configuration.GetValue<string>("AzureWebJobsStorage"));
+            //var account = CloudStorageAccount.Parse(configuration.GetValue<string>("AzureWebJobsStorage"));
+            var account = CloudStorageAccount.Parse("");
             this.client = account.CreateCloudTableClient();
-
+            
             this.table = client.GetTableReference(entityName);
             this.table.CreateIfNotExists();
         }
@@ -37,7 +36,7 @@ namespace LivestreamBot.Persistance
         public async Task InsertOrMergeAsync(TEntity entity)
         {
             TableOperation operation = TableOperation.InsertOrMerge(entity);
-            var result = await table.ExecuteAsync(operation);
+            await table.ExecuteAsync(operation);
         }
 
         public IQueryable<TEntity> Get()

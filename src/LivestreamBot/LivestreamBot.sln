@@ -5,9 +5,13 @@ VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LivestreamBot.Functions", "LivestreamBot.Functions\LivestreamBot.Functions.csproj", "{E988BC08-DFE7-4503-AF10-0A437CBF6596}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamBot.Core", "LivestreamBot.Core\LivestreamBot.Core.csproj", "{579FC8AF-7238-4D51-866C-20F4BC08C18A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LivestreamBot.Core", "LivestreamBot.Core\LivestreamBot.Core.csproj", "{579FC8AF-7238-4D51-866C-20F4BC08C18A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamBot.Persistance", "LivestreamBot.Persistance\LivestreamBot.Persistance.csproj", "{EFB8A91A-C602-4AD5-9E0C-469060CD4BE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LivestreamBot.Persistance", "LivestreamBot.Persistance\LivestreamBot.Persistance.csproj", "{EFB8A91A-C602-4AD5-9E0C-469060CD4BE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamBot.Bot", "LivesteamBot.Bot\LivestreamBot.Bot.csproj", "{E624B97D-631B-4B6C-84E7-FBA7F4E16C82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamBot.Handlers", "LivestreamBot.Handlers\LivestreamBot.Handlers.csproj", "{5E6218E0-F4A3-40E0-A855-AAAC5F2D9377}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{EFB8A91A-C602-4AD5-9E0C-469060CD4BE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFB8A91A-C602-4AD5-9E0C-469060CD4BE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFB8A91A-C602-4AD5-9E0C-469060CD4BE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E624B97D-631B-4B6C-84E7-FBA7F4E16C82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E624B97D-631B-4B6C-84E7-FBA7F4E16C82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E624B97D-631B-4B6C-84E7-FBA7F4E16C82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E624B97D-631B-4B6C-84E7-FBA7F4E16C82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E6218E0-F4A3-40E0-A855-AAAC5F2D9377}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E6218E0-F4A3-40E0-A855-AAAC5F2D9377}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E6218E0-F4A3-40E0-A855-AAAC5F2D9377}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E6218E0-F4A3-40E0-A855-AAAC5F2D9377}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

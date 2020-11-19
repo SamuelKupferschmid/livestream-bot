@@ -11,7 +11,7 @@ namespace LivestreamBot.Core
     {
         public static Container RegisterModules(this Container container, IEnumerable<Assembly> assemblies)
         {
-            var types = assemblies.SelectMany(ass => ass.GetTypes()).Where(type => type.IsClass && typeof(IModule).IsAssignableFrom(type));
+            var types = assemblies.SelectMany(ass => ass.GetExportedTypes()).Where(type => type.IsClass && typeof(IModule).IsAssignableFrom(type));
             foreach (var type in types)
             {
                 var module = Activator.CreateInstance(type) as IModule;
