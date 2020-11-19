@@ -9,8 +9,9 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using Telegram.Bot;
+using Telegram.Bot.Types;
 
-namespace LivestreamBot.Functions.Handlers
+namespace LivestreamBot.Handlers.Telegram
 {
     public class SetMessageEvent
     {
@@ -30,7 +31,7 @@ namespace LivestreamBot.Functions.Handlers
 
         public async Task Handle(SetMessageEvent @event, CancellationToken cancellationToken)
         {
-            await this.botClient.SendTextMessageAsync(new Telegram.Bot.Types.ChatId(this.botInfo.OwnerChatId), @event.Message, cancellationToken: cancellationToken);
+            await botClient.SendTextMessageAsync(new ChatId(botInfo.OwnerChatId), @event.Message, cancellationToken: cancellationToken);
         }
     }
 }

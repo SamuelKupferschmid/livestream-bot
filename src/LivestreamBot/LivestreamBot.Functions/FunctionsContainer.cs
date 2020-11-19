@@ -34,6 +34,12 @@ namespace LivestreamBot.Functions
             container.Verify();
         }
 
+        public static async Task<bool> Handle<TEvent>(CancellationToken cancellationToken)
+            where TEvent : new()
+        {
+            return await Handle(new TEvent(), cancellationToken);
+        }
+
         public static async Task<bool> Handle<TEvent>(TEvent @event, CancellationToken cancellationToken)
         {
             await using (AsyncScopedLifestyle.BeginScope(container))

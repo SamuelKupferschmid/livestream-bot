@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Threading;
-using LivestreamBot.Functions.Handlers;
+using LivestreamBot.Handlers.Telegram;
 
 namespace LivestreamBot.Functions
 {
@@ -34,6 +34,20 @@ namespace LivestreamBot.Functions
             await FunctionsContainer.Handle(new SetMessageEvent { Message = name }, cancellationToken);
 
             return new OkObjectResult(responseMessage);
+        }
+
+        [FunctionName(nameof(TelegramSetWebhookAsync))]
+        [NoAutomaticTrigger]
+        public async Task TelegramSetWebhookAsync(string input, CancellationToken cancellationToken)
+        {
+            await FunctionsContainer.Handle<SetWebhookEvent>(cancellationToken);
+        }
+
+        [FunctionName(nameof(TelegramDeleteWebHookAsync))]
+        [NoAutomaticTrigger]
+        public async Task TelegramDeleteWebHookAsync(string input, CancellationToken cancellationToken)
+        {
+            await FunctionsContainer.Handle<DeleteWebhookEvent>(cancellationToken);
         }
     }
 }
