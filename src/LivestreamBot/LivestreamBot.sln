@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LivestreamBot.Functions", "LivestreamBot.Functions\LivestreamBot.Functions.csproj", "{E988BC08-DFE7-4503-AF10-0A437CBF6596}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamBot.Core", "LivestreamBot.Core\LivestreamBot.Core.csproj", "{579FC8AF-7238-4D51-866C-20F4BC08C18A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamBot.Persistance", "LivestreamBot.Persistance\LivestreamBot.Persistance.csproj", "{EFB8A91A-C602-4AD5-9E0C-469060CD4BE7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{E988BC08-DFE7-4503-AF10-0A437CBF6596}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E988BC08-DFE7-4503-AF10-0A437CBF6596}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E988BC08-DFE7-4503-AF10-0A437CBF6596}.Release|Any CPU.Build.0 = Release|Any CPU
+		{579FC8AF-7238-4D51-866C-20F4BC08C18A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{579FC8AF-7238-4D51-866C-20F4BC08C18A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{579FC8AF-7238-4D51-866C-20F4BC08C18A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{579FC8AF-7238-4D51-866C-20F4BC08C18A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFB8A91A-C602-4AD5-9E0C-469060CD4BE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFB8A91A-C602-4AD5-9E0C-469060CD4BE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFB8A91A-C602-4AD5-9E0C-469060CD4BE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFB8A91A-C602-4AD5-9E0C-469060CD4BE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
