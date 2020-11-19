@@ -17,7 +17,6 @@ namespace LivesteamBot.Bot
             container.Register<ITelegramBotClient>(() =>
             {
                 var token = Environment.GetEnvironmentVariable("TelegramToken");
-                Console.WriteLine(token);
                 return new TelegramBotClient(token);
             });
 
