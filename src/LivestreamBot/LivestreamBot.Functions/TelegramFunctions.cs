@@ -33,7 +33,7 @@ namespace LivestreamBot.Functions
         public async Task Trigger([TimerTrigger("*/10 * * * * *", RunOnStartup = true)] TimerInfo timer, CancellationToken cancellationToken)
         {
 
-            await FunctionsContainer.Mediator.Send(new GetUpdatesRequest(), cancellationToken);
+            // await FunctionsContainer.Mediator.Send(new GetUpdatesRequest(), cancellationToken);
         }
 #endif
 

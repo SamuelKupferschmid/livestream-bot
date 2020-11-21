@@ -9,14 +9,14 @@ using Telegram.Bot.Types.Enums;
 
 namespace LivestreamBot.Handlers.Telegram.Commands
 {
-    public class CommandLiveStream : BaseBotCommandHandler
+    public class LivestreamBotCommandHandler : BaseBotCommandHandler
     {
         private readonly ITelegramBotClient client;
         private readonly ITelegramBotSubscriptionService botSubscriptionService;
 
         protected override string Command => "livestream";
 
-        public CommandLiveStream(ITelegramBotClient client, ITelegramBotSubscriptionService botSubscriptionService)
+        public LivestreamBotCommandHandler(ITelegramBotClient client, ITelegramBotSubscriptionService botSubscriptionService)
         {
             this.client = client;
             this.botSubscriptionService = botSubscriptionService;
@@ -30,6 +30,4 @@ namespace LivestreamBot.Handlers.Telegram.Commands
             await client.SendTextMessageAsync(message.Chat.Id, text , ParseMode.Markdown, cancellationToken: cancellationToken);
         }
     }
-
-
 }
