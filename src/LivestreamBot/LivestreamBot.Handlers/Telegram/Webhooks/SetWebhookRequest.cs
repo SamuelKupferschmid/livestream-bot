@@ -23,7 +23,7 @@ namespace LivestreamBot.Handlers.Telegram.Webhooks
             var baseurl = Environment.GetEnvironmentVariable("BaseUrl");
             var token = Environment.GetEnvironmentVariable("TelegramToken");
 
-            var url = $"{baseurl}/telegram-webhook/{token}";
+            var url = $"{baseurl}/api/telegram-webhook/{token}";
             await client.SetWebhookAsync(url, cancellationToken: cancellationToken);
             return Unit.Value;
         }
