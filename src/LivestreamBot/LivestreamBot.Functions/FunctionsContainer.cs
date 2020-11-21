@@ -2,8 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
 
 using LivestreamBot.Core.Modules;
 
@@ -12,7 +10,6 @@ using MediatR;
 using Microsoft.Extensions.Configuration;
 
 using SimpleInjector;
-using SimpleInjector.Lifestyles;
 
 namespace LivestreamBot.Functions
 {

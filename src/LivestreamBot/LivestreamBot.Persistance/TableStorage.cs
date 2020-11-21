@@ -10,9 +10,9 @@ namespace LivestreamBot.Persistance
     public interface ITableStorage<TEntity>
         where TEntity : TableEntity, new()
     {
-        public Task InsertOrMergeAsync(TEntity entity);
-        public IQueryable<TEntity> Get();
-        public Task DeleteAsync(TEntity entity, CancellationToken cancellationToken);
+        Task InsertOrMergeAsync(TEntity entity);
+        IQueryable<TEntity> Get();
+        Task DeleteAsync(TEntity entity, CancellationToken cancellationToken);
     }
 
 

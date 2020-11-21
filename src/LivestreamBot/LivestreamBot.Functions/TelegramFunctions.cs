@@ -9,7 +9,6 @@ using Newtonsoft.Json;
 using System.Threading;
 using Telegram.Bot.Types;
 using LivestreamBot.Handlers.Telegram.Webhooks;
-using LivestreamBot.Handlers.Telegram.Messages;
 
 namespace LivestreamBot.Functions
 {
@@ -30,9 +29,9 @@ namespace LivestreamBot.Functions
 
 #if DEBUG
         [FunctionName(nameof(Trigger))]
-        public async Task Trigger([TimerTrigger("*/10 * * * * *", RunOnStartup = true)] TimerInfo timer, CancellationToken cancellationToken)
+        public Task Trigger([TimerTrigger("*/10 * * * * *", RunOnStartup = true)] TimerInfo timer, CancellationToken cancellationToken)
         {
-
+            return Task.CompletedTask;
             // await FunctionsContainer.Mediator.Send(new GetUpdatesRequest(), cancellationToken);
         }
 #endif

@@ -11,14 +11,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LivestreamBot.Bot", "Livest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LivestreamBot.Handlers", "LivestreamBot.Handlers\LivestreamBot.Handlers.csproj", "{5E6218E0-F4A3-40E0-A855-AAAC5F2D9377}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamBot.Mediator", "LivestreamBot.Mediator\LivestreamBot.Mediator.csproj", "{84C66583-57F0-409A-8DB8-DDBF3E32B60F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LivestreamBot.Mediator", "LivestreamBot.Mediator\LivestreamBot.Mediator.csproj", "{84C66583-57F0-409A-8DB8-DDBF3E32B60F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamBot.Core", "LivestreamBot.Core\LivestreamBot.Core.csproj", "{7C7E1E45-C302-40B1-A0FA-6AB25E8FC082}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LivestreamBot.Core", "LivestreamBot.Core\LivestreamBot.Core.csproj", "{7C7E1E45-C302-40B1-A0FA-6AB25E8FC082}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DAC26051-0E12-4B0E-8B08-2FAC3B2FFC02}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamBot.Livestream", "LivestreamBot.Livestream\LivestreamBot.Livestream.csproj", "{1CB7B63C-CFD2-4160-BCB1-1B4AC59544C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{7C7E1E45-C302-40B1-A0FA-6AB25E8FC082}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C7E1E45-C302-40B1-A0FA-6AB25E8FC082}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C7E1E45-C302-40B1-A0FA-6AB25E8FC082}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CB7B63C-CFD2-4160-BCB1-1B4AC59544C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CB7B63C-CFD2-4160-BCB1-1B4AC59544C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CB7B63C-CFD2-4160-BCB1-1B4AC59544C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CB7B63C-CFD2-4160-BCB1-1B4AC59544C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
