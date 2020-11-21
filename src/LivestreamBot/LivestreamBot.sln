@@ -5,13 +5,20 @@ VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LivestreamBot.Functions", "LivestreamBot.Functions\LivestreamBot.Functions.csproj", "{E988BC08-DFE7-4503-AF10-0A437CBF6596}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LivestreamBot.Core", "LivestreamBot.Core\LivestreamBot.Core.csproj", "{579FC8AF-7238-4D51-866C-20F4BC08C18A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LivestreamBot.Persistance", "LivestreamBot.Persistance\LivestreamBot.Persistance.csproj", "{EFB8A91A-C602-4AD5-9E0C-469060CD4BE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamBot.Bot", "LivesteamBot.Bot\LivestreamBot.Bot.csproj", "{E624B97D-631B-4B6C-84E7-FBA7F4E16C82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LivestreamBot.Bot", "LivesteamBot.Bot\LivestreamBot.Bot.csproj", "{E624B97D-631B-4B6C-84E7-FBA7F4E16C82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamBot.Handlers", "LivestreamBot.Handlers\LivestreamBot.Handlers.csproj", "{5E6218E0-F4A3-40E0-A855-AAAC5F2D9377}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LivestreamBot.Handlers", "LivestreamBot.Handlers\LivestreamBot.Handlers.csproj", "{5E6218E0-F4A3-40E0-A855-AAAC5F2D9377}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamBot.Mediator", "LivestreamBot.Mediator\LivestreamBot.Mediator.csproj", "{84C66583-57F0-409A-8DB8-DDBF3E32B60F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivestreamBot.Core", "LivestreamBot.Core\LivestreamBot.Core.csproj", "{7C7E1E45-C302-40B1-A0FA-6AB25E8FC082}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DAC26051-0E12-4B0E-8B08-2FAC3B2FFC02}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +30,6 @@ Global
 		{E988BC08-DFE7-4503-AF10-0A437CBF6596}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E988BC08-DFE7-4503-AF10-0A437CBF6596}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E988BC08-DFE7-4503-AF10-0A437CBF6596}.Release|Any CPU.Build.0 = Release|Any CPU
-		{579FC8AF-7238-4D51-866C-20F4BC08C18A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{579FC8AF-7238-4D51-866C-20F4BC08C18A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{579FC8AF-7238-4D51-866C-20F4BC08C18A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{579FC8AF-7238-4D51-866C-20F4BC08C18A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EFB8A91A-C602-4AD5-9E0C-469060CD4BE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EFB8A91A-C602-4AD5-9E0C-469060CD4BE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFB8A91A-C602-4AD5-9E0C-469060CD4BE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +42,14 @@ Global
 		{5E6218E0-F4A3-40E0-A855-AAAC5F2D9377}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E6218E0-F4A3-40E0-A855-AAAC5F2D9377}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E6218E0-F4A3-40E0-A855-AAAC5F2D9377}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84C66583-57F0-409A-8DB8-DDBF3E32B60F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84C66583-57F0-409A-8DB8-DDBF3E32B60F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84C66583-57F0-409A-8DB8-DDBF3E32B60F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84C66583-57F0-409A-8DB8-DDBF3E32B60F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C7E1E45-C302-40B1-A0FA-6AB25E8FC082}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C7E1E45-C302-40B1-A0FA-6AB25E8FC082}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C7E1E45-C302-40B1-A0FA-6AB25E8FC082}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C7E1E45-C302-40B1-A0FA-6AB25E8FC082}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

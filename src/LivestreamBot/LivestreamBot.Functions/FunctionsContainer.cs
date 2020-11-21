@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
-using LivestreamBot.Core;
+using LivestreamBot.Core.Modules;
+
+using MediatR;
 
 using Microsoft.Extensions.Configuration;
 
@@ -29,37 +30,18 @@ namespace LivestreamBot.Functions
                 .ToList();
 
             container.RegisterModules(assemblies);
-            container.Collection.Register(typeof(IHandler<>), assemblies);            
 
             container.Verify();
         }
 
-        public static async Task<bool> Handle<TEvent>(CancellationToken cancellationToken)
-            where TEvent : new()
-        {
-            return await Handle(new TEvent(), cancellationToken);
-        }
 
-        public static async Task<bool> Handle<TEvent>(TEvent @event, CancellationToken cancellationToken)
-        {
-            await using (AsyncScopedLifestyle.BeginScope(container))
-            {
-                var handlers = container.GetAllInstances<IHandler<TEvent>>();
-
-                foreach (var handler in handlers)
-                {
-                    await handler.Handle(@event, cancellationToken);
-                }
-
-                return handlers.Any();
-            }
-        }
+        public static IMediator Mediator => container.GetInstance<IMediator>();
     }
 
 
     public class FunctionsModule : IModule
     {
-        public void Register(Container container)
+        public void Register(Container container, IList<Assembly> assemblies)
         {
             var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var builder = new ConfigurationBuilder()

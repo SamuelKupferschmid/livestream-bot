@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +18,6 @@ namespace LivestreamBot.Functions
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log, CancellationToken cancellationToken)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
 
             string name = req.Query["name"];
 
@@ -31,23 +29,30 @@ namespace LivestreamBot.Functions
                 ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
                 : $"Hello, {name}. This HTTP triggered function executed successfully.";
 
-            await FunctionsContainer.Handle(new SetMessageEvent { Message = name }, cancellationToken);
+            await FunctionsContainer.Mediator.Publish(new BotUpdate(null), cancellationToken);
 
             return new OkObjectResult(responseMessage);
+        }
+
+        [FunctionName(nameof(Trigger))]
+        public async Task Trigger([TimerTrigger("*/10 * * * * *", RunOnStartup = true)] TimerInfo timer, CancellationToken cancellationToken)
+        {
+            await Task.CompletedTask;
+            //await FunctionsContainer.Mediator.Send(new GetUpdatesRequest(), cancellationToken);
         }
 
         [FunctionName(nameof(TelegramSetWebhookAsync))]
         [NoAutomaticTrigger]
         public async Task TelegramSetWebhookAsync(string input, CancellationToken cancellationToken)
         {
-            await FunctionsContainer.Handle<SetWebhookEvent>(cancellationToken);
+            await Task.CompletedTask;
         }
 
         [FunctionName(nameof(TelegramDeleteWebHookAsync))]
         [NoAutomaticTrigger]
         public async Task TelegramDeleteWebHookAsync(string input, CancellationToken cancellationToken)
         {
-            await FunctionsContainer.Handle<DeleteWebhookEvent>(cancellationToken);
+            await Task.CompletedTask;
         }
     }
 }

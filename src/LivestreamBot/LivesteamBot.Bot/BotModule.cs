@@ -1,18 +1,21 @@
-﻿using LivestreamBot.Core;
+﻿using LivesteamBot.Bot;
 
-using Microsoft.Extensions.Configuration;
+using LivestreamBot.Core.Modules;
 
 using SimpleInjector;
 
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 using Telegram.Bot;
 
-namespace LivesteamBot.Bot
+namespace LivestreamBot.Bot
 {
     public class BotModule : IModule
     {
-        public void Register(Container container)
+
+        public void Register(Container container, IList<Assembly> assemblies)
         {
             container.Register<ITelegramBotClient>(() =>
             {

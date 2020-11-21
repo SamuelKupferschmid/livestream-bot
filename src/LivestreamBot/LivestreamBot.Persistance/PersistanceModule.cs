@@ -1,16 +1,19 @@
-﻿using LivestreamBot.Core;
+﻿
+using LivestreamBot.Core.Modules;
 
 using Microsoft.Azure.Cosmos.Table;
 
 using SimpleInjector;
 
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace LivestreamBot.Persistance
 {
     public class PersistanceModule : IModule
     {
-        public void Register(Container container)
+        public void Register(Container container, IList<Assembly> assemblies)
         {
             var entityTypes = typeof(PersistanceModule).Assembly.GetTypes().Where(t => typeof(TableEntity).IsAssignableFrom(t));
 
