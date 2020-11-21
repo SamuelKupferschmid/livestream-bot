@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LivesteamBot.Bot\LivestreamBot.Bot.csproj" />
+    <ProjectReference Include="..\LivestreamBot.Livestream\LivestreamBot.Livestream.csproj" />
   </ItemGroup>
 
 </Project>

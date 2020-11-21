@@ -14,13 +14,13 @@ using Telegram.Bot.Types;
 
 namespace LivestreamBot.Handlers.Livestream
 {
-    public class LivestreamMissingNotificationHanler : INotificationHandler<LiveStreamNotificationInfo>
+    public class LivestreamNotActiveNotificationHandler : INotificationHandler<LiveStreamNotificationInfo>
     {
         private readonly ITelegramBotSubscriptionService telegramBotSubscriptions;
         private readonly ITableStorage<LivestreamNotification> notificationTable;
         private readonly ITelegramBotClient botClient;
 
-        public LivestreamMissingNotificationHanler(ITelegramBotClient botClient, ITelegramBotSubscriptionService telegramBotSubscriptions, ITableStorage<LivestreamNotification> notificationTable)
+        public LivestreamNotActiveNotificationHandler(ITelegramBotClient botClient, ITelegramBotSubscriptionService telegramBotSubscriptions, ITableStorage<LivestreamNotification> notificationTable)
         {
             this.botClient = botClient;
             this.telegramBotSubscriptions = telegramBotSubscriptions;
@@ -29,14 +29,14 @@ namespace LivestreamBot.Handlers.Livestream
 
         public async Task Handle(LiveStreamNotificationInfo info, CancellationToken cancellationToken)
         {
-            if(!IsMissing(info))
+            if (!IsNotLive(info))
             {
                 return;
             }
 
-            var chats = await telegramBotSubscriptions.GetSubcribers(NotificationNames.LivestreamMissing, cancellationToken);
+            var chats = await telegramBotSubscriptions.GetSubcribers(NotificationNames.LivestreamNotActive, cancellationToken);
 
-            var message = "Upps, irgendwie schein noch kein Livestream sichtbar zu sein. Könnt ihr da Mal schauen?";
+            var message = "Hey Leute, es ist Zeit Live zu gehen aber der Livestream scheint noch nicht gestartet zu sein.";
 
             foreach (var chat in chats)
             {
@@ -45,17 +45,18 @@ namespace LivestreamBot.Handlers.Livestream
 
             await notificationTable.InsertOrMergeAsync(new LivestreamNotification
             {
-                Name = NotificationNames.LivestreamMissing,
+                Name = NotificationNames.LivestreamNotActive,
                 DateTime = DateTime.UtcNow,
             });
         }
 
-        private bool IsMissing(LiveStreamNotificationInfo info)
+        private bool IsNotLive(LiveStreamNotificationInfo info)
         {
 
-            var expectEvent = (info.OngoingEvent || info.TimeUntilEvent < TimeSpan.FromMinutes(15));
-            var foundLivestream = info.SearchResults.Any(s => s.Snippet.LiveBroadcastContent != "none");
-            var hasNotified = info.ExistingNotifications.Any(not => not.Name == NotificationNames.LivestreamMissing);
+            var expectEvent = info.OngoingEvent;
+            var foundLivestream = info.SearchResults.Any(s => s.Snippet.LiveBroadcastContent == "active");
+            var hasNotified = info.ExistingNotifications.Any(not => not.Name == NotificationNames.LivestreamNotActive
+            );
 
             return expectEvent && !foundLivestream && !hasNotified;
         }

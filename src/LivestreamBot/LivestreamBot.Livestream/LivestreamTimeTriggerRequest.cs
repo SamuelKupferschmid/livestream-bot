@@ -21,11 +21,10 @@ namespace LivestreamBot.Livestream
     {
         private readonly ITableStorage<LivestreamNotification> tableStorage;
         private readonly IMediator mediator;
-        private readonly IRecuringEventsProvider eventsProvider;
         private readonly YouTubeService service;
         private readonly string channelId;
 
-        public LivestreamTimeTriggerRequestHandler(ITableStorage<LivestreamNotification> tableStorage, IRecuringEventsProvider eventsProvider, IMediator mediator)
+        public LivestreamTimeTriggerRequestHandler(ITableStorage<LivestreamNotification> tableStorage, IMediator mediator)
         {
             this.tableStorage = tableStorage;
             this.service = new YouTubeService(new BaseClientService.Initializer
@@ -34,7 +33,6 @@ namespace LivestreamBot.Livestream
             });
 
             channelId = Environment.GetEnvironmentVariable("YoutubeChannelId");
-            this.eventsProvider = eventsProvider;
             this.mediator = mediator;
         }
 
@@ -78,7 +76,7 @@ namespace LivestreamBot.Livestream
 
             if (dateTime.DayOfWeek != DayOfWeek.Sunday || !(info.OngoingEvent || info.TimeSinceEvent < tolerance || info.TimeUntilEvent < tolerance))
             {
-                //return;
+                return Unit.Value;
             }
 
             var list = service.Search.List(new Google.Apis.Util.Repeatable<string>(new[] { "snippet" }));

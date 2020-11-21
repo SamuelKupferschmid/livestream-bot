@@ -13,7 +13,6 @@ namespace LivestreamBot.Livestream
     {
         public void Register(Container container, IList<Assembly> assemblies)
         {
-            container.Register<IRecuringEventsProvider, RecuringEventsProvider>();
         }
     }
 }

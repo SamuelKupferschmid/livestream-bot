@@ -4,6 +4,6 @@
     {
         public static string NewLivestream = nameof(NewLivestream);
         public static string LivestreamMissing = nameof(LivestreamMissing);
-        public static string LivestreamPending = nameof(LivestreamPending);
+        public static string LivestreamNotActive = nameof(LivestreamNotActive);
     }
 }
