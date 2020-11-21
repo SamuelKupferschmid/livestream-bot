@@ -1,5 +1,6 @@
 ﻿using LivesteamBot.Bot;
 
+using LivestreamBot.Bot.Subscriptions;
 using LivestreamBot.Core.Modules;
 
 using SimpleInjector;
@@ -24,6 +25,7 @@ namespace LivestreamBot.Bot
             });
 
             container.Register<ITelegramBotInfo, TelegramBotInfo>();
+            container.Register<ITelegramBotSubscriptionService, TelegramBotSubscriptionService>();
         }
     }
 }

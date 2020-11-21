@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Threading;
-using LivestreamBot.Handlers.Telegram;
+using Telegram.Bot.Types;
+using LivestreamBot.Handlers.Telegram.Webhooks;
+using LivestreamBot.Handlers.Telegram.Messages;
 
 namespace LivestreamBot.Functions
 {
@@ -15,44 +17,38 @@ namespace LivestreamBot.Functions
     {
         [FunctionName(nameof(TelegramWebhook))]
         public async Task<IActionResult> TelegramWebhook(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "telegram-webhook/{token}")] HttpRequest req, string token,
             ILogger log, CancellationToken cancellationToken)
         {
-
-            string name = req.Query["name"];
-
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name ??= data?.name;
+            var update = JsonConvert.DeserializeObject<Update>(requestBody);
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+            await FunctionsContainer.Mediator.Send(new WebhookUpdate { Payload = update, Token = token }, cancellationToken);
 
-            await FunctionsContainer.Mediator.Publish(new BotUpdate(null), cancellationToken);
-
-            return new OkObjectResult(responseMessage);
+            return new OkResult();
         }
 
+#if DEBUG
         [FunctionName(nameof(Trigger))]
         public async Task Trigger([TimerTrigger("*/10 * * * * *", RunOnStartup = true)] TimerInfo timer, CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
-            //await FunctionsContainer.Mediator.Send(new GetUpdatesRequest(), cancellationToken);
+
+            await FunctionsContainer.Mediator.Send(new GetUpdatesRequest(), cancellationToken);
         }
+#endif
 
         [FunctionName(nameof(TelegramSetWebhookAsync))]
         [NoAutomaticTrigger]
         public async Task TelegramSetWebhookAsync(string input, CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
+            await FunctionsContainer.Mediator.Send(new SetWebhookRequest(), cancellationToken);
         }
 
         [FunctionName(nameof(TelegramDeleteWebHookAsync))]
         [NoAutomaticTrigger]
         public async Task TelegramDeleteWebHookAsync(string input, CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
+            await FunctionsContainer.Mediator.Send(new DeleteWebhookRequest(), cancellationToken);
         }
     }
 }

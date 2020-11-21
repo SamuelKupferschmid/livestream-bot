@@ -16,6 +16,8 @@ namespace LivestreamBot.Handlers.Telegram
             this.Update = update;
         }
 
+        public string Token { get; }
+
         public Update Update { get; }
     }
 

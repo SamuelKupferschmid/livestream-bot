@@ -15,7 +15,7 @@ namespace LivestreamBot.Persistance
     {
         public void Register(Container container, IList<Assembly> assemblies)
         {
-            var entityTypes = typeof(PersistanceModule).Assembly.GetTypes().Where(t => typeof(TableEntity).IsAssignableFrom(t));
+            var entityTypes = assemblies.SelectMany(ass => ass.GetTypes()).Where(t => typeof(TableEntity).IsAssignableFrom(t));
 
             foreach (var type in entityTypes)
             {

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 using Telegram.Bot;
 
-namespace LivestreamBot.Handlers.Telegram
+namespace LivestreamBot.Handlers.Telegram.Messages
 {
-    public class GetUpdatesRequest: IRequest
+    public class GetUpdatesRequest : IRequest
     {
 
     }
@@ -26,9 +26,9 @@ namespace LivestreamBot.Handlers.Telegram
 
         public async Task<Unit> Handle(GetUpdatesRequest request, CancellationToken cancellationToken)
         {
-            var updates = await this.botClient.GetUpdatesAsync(cancellationToken: cancellationToken);
+            var updates = await botClient.GetUpdatesAsync(cancellationToken: cancellationToken);
 
-            foreach(var update in updates)
+            foreach (var update in updates)
             {
                 await mediator.Publish(new BotUpdate(update), cancellationToken);
             }
