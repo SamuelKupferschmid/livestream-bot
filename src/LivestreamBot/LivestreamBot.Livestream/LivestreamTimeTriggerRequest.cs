@@ -44,9 +44,9 @@ namespace LivestreamBot.Livestream
 
 
             var start1 = new TimeSpan(10, 45, 00);
-            var end1 = new TimeSpan(12, 00, 00);
+            var end1 = new TimeSpan(11, 50, 00);
             var start2 = new TimeSpan(19, 15, 00);
-            var end2 = new TimeSpan(20, 30, 00);
+            var end2 = new TimeSpan(20, 20, 00);
 
             var info = new LiveStreamNotificationInfo
             {
