@@ -1,5 +1,4 @@
-﻿using LivesteamBot.Bot;
-
+﻿
 using LivestreamBot.Bot.Subscriptions;
 using LivestreamBot.Core.Modules;
 

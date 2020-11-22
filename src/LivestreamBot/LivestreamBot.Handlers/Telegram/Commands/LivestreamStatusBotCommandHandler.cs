@@ -26,8 +26,9 @@ namespace LivestreamBot.Handlers.Telegram.Commands
         {
             await this.botSubscriptionService.Subscribe(message.Chat.Id, NotificationNames.LivestreamMissing, cancellationToken);
             await this.botSubscriptionService.Subscribe(message.Chat.Id, NotificationNames.LivestreamNotActive, cancellationToken);
+            await this.botSubscriptionService.Subscribe(message.Chat.Id, NotificationNames.LivestreamActive, cancellationToken);
             var plural = message.Chat.Type == ChatType.Private;
-            await client.SendTextMessageAsync(message.Chat.Id, $"*Hallo {message.From.FirstName}!! 😊* Ich werde ab sofort ein Auge auf unser 🎥Livesteams🎥 werfen und  {(plural ? "euch" : "dich")} informieren. Falls ich {(plural ? "euch" : "dir")} zu lästig werde, bin ich mit einem '/stop' sofort ruhig.", ParseMode.Markdown, cancellationToken: cancellationToken);
+            await client.SendTextMessageAsync(message.Chat.Id, $"*Hallo {message.From.FirstName}!! 😊* Ich werde ab sofort ein Auge auf unser 🎥Livestreams🎥 werfen und  {(plural ? "euch" : "dich")} informieren. Falls ich {(plural ? "euch" : "dir")} zu lästig werde, bin ich mit einem '/stop' sofort ruhig.", ParseMode.Markdown, cancellationToken: cancellationToken);
 
         }
     }

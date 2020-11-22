@@ -1,7 +1,7 @@
 ﻿
 using System;
 
-namespace LivesteamBot.Bot
+namespace LivestreamBot.Bot
 {
     public interface ITelegramBotInfo
     {

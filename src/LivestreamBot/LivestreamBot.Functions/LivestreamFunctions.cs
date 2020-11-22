@@ -1,4 +1,6 @@
 using System.Threading;
+using System.Threading.Tasks;
+
 using LivestreamBot.Functions;
 using LivestreamBot.Livestream;
 using Microsoft.Azure.WebJobs;
@@ -8,8 +10,8 @@ namespace ChurchLiveStreamBot
 {
     public class LivestreamFunctions
     {
-        [FunctionName(nameof(LivesteamTimeTrigger))]
-        public async System.Threading.Tasks.Task LivesteamTimeTrigger([TimerTrigger("0 * * * * *")]TimerInfo timer, ILogger log, CancellationToken cancellationToken)
+        [FunctionName(nameof(LivestreamTimeTrigger))]
+        public async Task LivestreamTimeTrigger([TimerTrigger("0 * * * * *")]TimerInfo timer, ILogger log, CancellationToken cancellationToken)
         {
             await FunctionsContainer.Mediator.Send(new LivestreamTimeTriggerRequest(), cancellationToken);
         }
