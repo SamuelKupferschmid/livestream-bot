@@ -38,7 +38,7 @@ namespace LivestreamBot.Livestream
 
         public async Task<Unit> Handle(LivestreamTimeTriggerRequest request, CancellationToken cancellationToken)
         {
-            var dateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time"));
+            var dateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Europe/Zurich"));
 
             var timeOfDay = dateTime.TimeOfDay;
 
