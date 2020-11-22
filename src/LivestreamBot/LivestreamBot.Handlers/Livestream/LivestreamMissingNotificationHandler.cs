@@ -52,7 +52,7 @@ namespace LivestreamBot.Handlers.Livestream
 
         private bool IsMissing(LiveStreamNotificationInfo info)
         {
-            var expectEvent = info.OngoingEvent || info.TimeUntilEvent < TimeSpan.FromMinutes(15);
+            var expectEvent = info.OngoingEvent || info.TimeUntilEvent < TimeSpan.FromMinutes(25);
             var foundLivestream = info.SearchResults.Any(s => s.Snippet.LiveBroadcastContent != "none");
             var hasNotified = info.ExistingNotifications.Any(not => not.Name == NotificationNames.LivestreamMissing);
 
