@@ -8,7 +8,7 @@ using Telegram.Bot.Types.Enums;
 
 namespace LivestreamBot.Handlers.Telegram
 {
-    public class JoinChatBotUpdateHandler: BaseBotUpdateHandler
+    public class JoinChatBotUpdateHandler : BaseBotUpdateHandler
     {
         private readonly ITelegramBotClient client;
 

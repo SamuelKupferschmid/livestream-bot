@@ -1,5 +1,5 @@
 ﻿
-using LivestreamBot.Core.Modules;
+using LivestreamBot.Core.DI;
 
 using Microsoft.Azure.Cosmos.Table;
 

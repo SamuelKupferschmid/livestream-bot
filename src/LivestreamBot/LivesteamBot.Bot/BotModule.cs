@@ -1,6 +1,6 @@
 ﻿
 using LivestreamBot.Bot.Subscriptions;
-using LivestreamBot.Core.Modules;
+using LivestreamBot.Core.DI;
 
 using SimpleInjector;
 

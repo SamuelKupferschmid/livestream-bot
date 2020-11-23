@@ -18,7 +18,7 @@ namespace LivestreamBot.Handlers.Telegram.Commands
             var message = update.Update.Message;
             var matches = message != null && message.Type == MessageType.Text && message.EntityValues != null && message.EntityValues.Any(e => e == "/" + Command || e.StartsWith($"/{Command}@"));
 
-            if(matches)
+            if (matches)
             {
                 await this.Handle(message, cancellationToken);
             }
