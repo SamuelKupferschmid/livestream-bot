@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
-namespace LivestreamBot.Handlers.Livestream
+namespace LivestreamBot.Handlers.Livestream.Status
 {
-    public class LivestreamActiveNotificationHandler : INotificationHandler<LiveStreamNotificationInfo>
+    public class LivestreamActiveNotificationHandler : INotificationHandler<LiveStreamNotificationInfo>, ILivestreamTimeTriggeredEventNotificationHandler
     {
         private readonly ITelegramBotSubscriptionService telegramBotSubscriptions;
         private readonly ITableStorage<LivestreamNotification> notificationTable;
@@ -26,6 +26,8 @@ namespace LivestreamBot.Handlers.Livestream
             this.telegramBotSubscriptions = telegramBotSubscriptions;
             this.notificationTable = notificationTable;
         }
+
+        public TimeSpan NotifyBeforeLivestream => TimeSpan.Zero;
 
         public async Task Handle(LiveStreamNotificationInfo info, CancellationToken cancellationToken)
         {
@@ -46,7 +48,7 @@ https://www.youtube.com/watch?v={result.Id.VideoId}";
 
                 foreach (var chat in await telegramBotSubscriptions.GetSubcribers(NotificationNames.LivestreamActive, cancellationToken))
                 {
-                    await this.botClient.SendTextMessageAsync(new ChatId(chat), videoLink, cancellationToken: cancellationToken);
+                    await botClient.SendTextMessageAsync(new ChatId(chat), videoLink, cancellationToken: cancellationToken);
                 }
 
                 await notificationTable.InsertOrMergeAsync(new LivestreamNotification

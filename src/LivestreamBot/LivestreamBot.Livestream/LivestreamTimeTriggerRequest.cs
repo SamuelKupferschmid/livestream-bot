@@ -1,8 +1,8 @@
 ﻿using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
-using Google.Apis.YouTube.v3.Data;
 
 using LivestreamBot.Core;
+using LivestreamBot.Livestream.Events;
 using LivestreamBot.Persistance;
 
 using MediatR;
@@ -21,11 +21,13 @@ namespace LivestreamBot.Livestream
     {
         private readonly ITableStorage<LivestreamNotification> tableStorage;
         private readonly IMediator mediator;
+        private readonly ILivestreamEventProvider eventProvider;
+        private readonly IEnumerable<ILivestreamTimeTriggeredEventNotificationHandler> notificationHandlers;
         private readonly TimeZoneInfo timezoneInfo;
         private readonly YouTubeService service;
         private readonly string channelId;
 
-        public LivestreamTimeTriggerRequestHandler(ITableStorage<LivestreamNotification> tableStorage, IMediator mediator, TimeZoneInfo timezoneInfo)
+        public LivestreamTimeTriggerRequestHandler(ITableStorage<LivestreamNotification> tableStorage, IMediator mediator, TimeZoneInfo timezoneInfo, ILivestreamEventProvider eventProvider, IEnumerable<ILivestreamTimeTriggeredEventNotificationHandler> notificationHandlers)
         {
             this.tableStorage = tableStorage;
             this.service = new YouTubeService(new BaseClientService.Initializer
@@ -36,47 +38,18 @@ namespace LivestreamBot.Livestream
             channelId = Environment.GetEnvironmentVariable("YoutubeChannelId");
             this.mediator = mediator;
             this.timezoneInfo = timezoneInfo;
+            this.eventProvider = eventProvider;
+            this.notificationHandlers = notificationHandlers;
         }
 
         public async Task<Unit> Handle(LivestreamTimeTriggerRequest request, CancellationToken cancellationToken)
         {
             var dateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, this.timezoneInfo);
+            var events = this.eventProvider.GetWeeklyEvents().ToList();
+            var handlers = notificationHandlers.Max(handlers => handlers.NotifyBeforeLivestream);
+            var timeUntilNextEvent = events.Min(ev => ev.GetLivestreamEventInfo(dateTime).untilNext);
 
-            var timeOfDay = dateTime.TimeOfDay;
-
-
-            var start1 = new TimeSpan(10, 45, 00);
-            var end1 = new TimeSpan(11, 50, 00);
-            var start2 = new TimeSpan(19, 15, 00);
-            var end2 = new TimeSpan(20, 20, 00);
-
-            var info = new LiveStreamNotificationInfo
-            {
-                OngoingEvent = timeOfDay > start1 && timeOfDay < end1 || timeOfDay > start2 && timeOfDay < end2,
-            };
-
-            if (timeOfDay < start1)
-            {
-                info.TimeUntilEvent = start1 - timeOfDay;
-            }
-            else if (timeOfDay < start2)
-            {
-                info.TimeUntilEvent = start2 - timeOfDay;
-            }
-
-            if (timeOfDay > end2)
-            {
-                info.TimeSinceEvent = timeOfDay - end2;
-            }
-            else if (timeOfDay > end1)
-            {
-                info.TimeSinceEvent = timeOfDay - end1;
-            }
-
-            var tolerance = TimeSpan.FromHours(2);
-
-
-            if (dateTime.DayOfWeek != DayOfWeek.Sunday || !(info.OngoingEvent || info.TimeSinceEvent < tolerance || info.TimeUntilEvent < tolerance))
+            if (timeUntilNextEvent > handlers)
             {
                 return Unit.Value;
             }
@@ -87,21 +60,22 @@ namespace LivestreamBot.Livestream
             list.Type = new Google.Apis.Util.Repeatable<string>(new[] { "video" });
             list.PublishedAfter = DateTime.UtcNow.AddHours(-4).ToRfc3339String();
 
-            info.SearchResults = (await list.ExecuteAsync()).Items;
-            info.ExistingNotifications = tableStorage.Get().Where(n => n.DateTime > DateTime.UtcNow.AddHours(-4)).ToList();
+            var searchResult = (await list.ExecuteAsync()).Items;
+            var existingNotifications = tableStorage.Get().Where(n => n.DateTime > DateTime.UtcNow.AddHours(-4)).ToList();
 
-            await mediator.Publish(info, cancellationToken);
+            foreach(var @event in events)
+            {
+                var info = new LiveStreamNotificationInfo {
+                    Event = @event,
+                    SearchResults = searchResult,
+                    ExistingNotifications = existingNotifications,
+                };
+                (info.TimeUntilNext, info.IsOngoing) = @event.GetLivestreamEventInfo(dateTime);
+
+                await mediator.Publish(info, cancellationToken);
+            }
 
             return Unit.Value;
         }
-    }
-
-    public class LiveStreamNotificationInfo : INotification
-    {
-        public IList<SearchResult> SearchResults { get; set; }
-        public IList<LivestreamNotification> ExistingNotifications { get; set; }
-        public TimeSpan? TimeUntilEvent { get; set; }
-        public TimeSpan? TimeSinceEvent { get; set; }
-        public bool OngoingEvent { get; set; }
     }
 }

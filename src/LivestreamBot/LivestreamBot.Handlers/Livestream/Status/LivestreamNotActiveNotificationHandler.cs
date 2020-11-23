@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
-namespace LivestreamBot.Handlers.Livestream
+namespace LivestreamBot.Handlers.Livestream.Status
 {
-    public class LivestreamNotActiveNotificationHandler : INotificationHandler<LiveStreamNotificationInfo>
+    public class LivestreamNotActiveNotificationHandler : INotificationHandler<LiveStreamNotificationInfo>, ILivestreamTimeTriggeredEventNotificationHandler
     {
         private readonly ITelegramBotSubscriptionService telegramBotSubscriptions;
         private readonly ITableStorage<LivestreamNotification> notificationTable;
@@ -26,6 +26,8 @@ namespace LivestreamBot.Handlers.Livestream
             this.telegramBotSubscriptions = telegramBotSubscriptions;
             this.notificationTable = notificationTable;
         }
+
+        public TimeSpan NotifyBeforeLivestream => TimeSpan.Zero;
 
         public async Task Handle(LiveStreamNotificationInfo info, CancellationToken cancellationToken)
         {
@@ -53,7 +55,7 @@ namespace LivestreamBot.Handlers.Livestream
         private bool IsNotLive(LiveStreamNotificationInfo info)
         {
 
-            var expectEvent = info.OngoingEvent;
+            var expectEvent = info.IsOngoing;
             var foundLivestream = info.SearchResults.Any(s => s.Snippet.LiveBroadcastContent == "active");
             var hasNotified = info.ExistingNotifications.Any(not => not.Name == NotificationNames.LivestreamNotActive
             );

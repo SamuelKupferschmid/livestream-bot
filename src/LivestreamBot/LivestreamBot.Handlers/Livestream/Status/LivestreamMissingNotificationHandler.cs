@@ -1,7 +1,7 @@
 ﻿using LivestreamBot.Bot.Subscriptions;
 using LivestreamBot.Livestream;
 using LivestreamBot.Persistance;
-
+using LivestreamBot.Livestream.Events;
 using MediatR;
 
 using System;
@@ -12,20 +12,24 @@ using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
-namespace LivestreamBot.Handlers.Livestream
+namespace LivestreamBot.Handlers.Livestream.Status
 {
-    public class LivestreamMissingNotificationHandler : INotificationHandler<LiveStreamNotificationInfo>
+    public class LivestreamMissingNotificationHandler : INotificationHandler<LiveStreamNotificationInfo>, ILivestreamTimeTriggeredEventNotificationHandler
     {
         private readonly ITelegramBotSubscriptionService telegramBotSubscriptions;
         private readonly ITableStorage<LivestreamNotification> notificationTable;
+        private readonly TimeZoneInfo timezoneInfo;
         private readonly ITelegramBotClient botClient;
 
-        public LivestreamMissingNotificationHandler(ITelegramBotClient botClient, ITelegramBotSubscriptionService telegramBotSubscriptions, ITableStorage<LivestreamNotification> notificationTable)
+        public LivestreamMissingNotificationHandler(ITelegramBotClient botClient, ITelegramBotSubscriptionService telegramBotSubscriptions, ITableStorage<LivestreamNotification> notificationTable, TimeZoneInfo timezoneInfo)
         {
             this.botClient = botClient;
             this.telegramBotSubscriptions = telegramBotSubscriptions;
             this.notificationTable = notificationTable;
+            this.timezoneInfo = timezoneInfo;
         }
+
+        public TimeSpan NotifyBeforeLivestream => TimeSpan.FromMinutes(25);
 
         public async Task Handle(LiveStreamNotificationInfo info, CancellationToken cancellationToken)
         {
@@ -52,7 +56,7 @@ namespace LivestreamBot.Handlers.Livestream
 
         private bool IsMissing(LiveStreamNotificationInfo info)
         {
-            var expectEvent = info.OngoingEvent || info.TimeUntilEvent < TimeSpan.FromMinutes(25);
+            var expectEvent = info.IsOngoing || info.TimeUntilNext < NotifyBeforeLivestream;
             var foundLivestream = info.SearchResults.Any(s => s.Snippet.LiveBroadcastContent != "none");
             var hasNotified = info.ExistingNotifications.Any(not => not.Name == NotificationNames.LivestreamMissing);
 
