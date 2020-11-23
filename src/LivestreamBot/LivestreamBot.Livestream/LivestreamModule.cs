@@ -1,4 +1,5 @@
 ﻿using LivestreamBot.Core.DI;
+using LivestreamBot.Livestream.Events;
 
 using SimpleInjector;
 
@@ -11,6 +12,7 @@ namespace LivestreamBot.Livestream
     {
         public void Register(Container container, IList<Assembly> assemblies)
         {
+            container.Register<ILivestreamEventProvider, LivestreamEventProvider>();
         }
     }
 }
