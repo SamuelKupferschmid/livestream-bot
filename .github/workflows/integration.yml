@@ -28,4 +28,4 @@ jobs:
     - name: Build
       run: dotnet build ${{ env.SOLUTION_PATH }}  --no-restore
     - name: Run Test
-      run: dotnet test ${{ env.SOLUTION_PATH }} --collect:"XPlat Code Coverage
+      run: dotnet test ${{ env.SOLUTION_PATH }} --collect:"XPlat Code Coverage"
