@@ -9,7 +9,7 @@ using Telegram.Bot.Types;
 using Telegram.Bot;
 using System.Linq;
 
-namespace LivestreamBot.Handlers.Livestream
+namespace LivestreamBot.Handlers.Livestream.Scheduling
 {
     public class LivestreamPublishedNotificationHandler : INotificationHandler<LiveStreamNotificationInfo>
     {
@@ -42,7 +42,7 @@ namespace LivestreamBot.Handlers.Livestream
 
                 foreach (var chat in await telegramBotSubscriptions.GetSubcribers(NotificationNames.LivestreamNew, cancellationToken))
                 {
-                    await this.botClient.SendTextMessageAsync(new ChatId(chat), videoLink, cancellationToken: cancellationToken);
+                    await botClient.SendTextMessageAsync(new ChatId(chat), videoLink, cancellationToken: cancellationToken);
                 }
 
                 await notificationTable.InsertOrMergeAsync(new LivestreamNotification

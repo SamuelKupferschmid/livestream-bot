@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
-namespace LivestreamBot.Handlers.Livestream
+namespace LivestreamBot.Handlers.Livestream.Status
 {
     public class LivestreamNotActiveNotificationHandler : INotificationHandler<LiveStreamNotificationInfo>, ILivestreamTimeTriggeredEventNotificationHandler
     {
