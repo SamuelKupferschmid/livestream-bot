@@ -14,7 +14,7 @@ using Telegram.Bot.Types;
 
 namespace LivestreamBot.Handlers.Livestream
 {
-    public class LivestreamActiveNotificationHandler : INotificationHandler<LiveStreamNotificationInfo>
+    public class LivestreamActiveNotificationHandler : INotificationHandler<LiveStreamNotificationInfo>, ILivestreamTimeTriggeredEventNotificationHandler
     {
         private readonly ITelegramBotSubscriptionService telegramBotSubscriptions;
         private readonly ITableStorage<LivestreamNotification> notificationTable;
@@ -26,6 +26,8 @@ namespace LivestreamBot.Handlers.Livestream
             this.telegramBotSubscriptions = telegramBotSubscriptions;
             this.notificationTable = notificationTable;
         }
+
+        public TimeSpan NotifyBeforeLivestream => TimeSpan.Zero;
 
         public async Task Handle(LiveStreamNotificationInfo info, CancellationToken cancellationToken)
         {
