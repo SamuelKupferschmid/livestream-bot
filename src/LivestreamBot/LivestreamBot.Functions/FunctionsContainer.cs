@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-using LivestreamBot.Core.Modules;
+using LivestreamBot.Core.DI;
 
 using MediatR;
 

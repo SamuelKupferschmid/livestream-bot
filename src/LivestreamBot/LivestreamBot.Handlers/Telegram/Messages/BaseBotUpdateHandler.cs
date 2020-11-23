@@ -28,7 +28,7 @@ namespace LivestreamBot.Handlers.Telegram
 
         public async Task Handle(BotUpdate update, CancellationToken cancellationToken)
         {
-            if(Predicate(update))
+            if (Predicate(update))
             {
                 await this.HandleUpdate(update, cancellationToken);
             }

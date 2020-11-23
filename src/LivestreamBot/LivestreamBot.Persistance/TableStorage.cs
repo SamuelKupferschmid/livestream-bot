@@ -28,7 +28,7 @@ namespace LivestreamBot.Persistance
 
             var account = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("AzureWebJobsStorage"));
             this.client = account.CreateCloudTableClient();
-            
+
             this.table = client.GetTableReference(entityName);
             this.table.CreateIfNotExists();
         }

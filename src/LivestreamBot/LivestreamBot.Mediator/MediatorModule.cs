@@ -1,4 +1,4 @@
-﻿using LivestreamBot.Core.Modules;
+﻿using LivestreamBot.Core.DI;
 using LivestreamBot.Mediator.Pipeline;
 
 using MediatR;
@@ -28,7 +28,7 @@ namespace LivestreamBot.Mediator
             container.Collection.Register(typeof(IPipelineBehavior<,>), new[]
             {
                 typeof(GenericPipelineBehavior<,>)
-                
+
             });
 
             container.Register(() => new ServiceFactory(container.GetInstance), Lifestyle.Singleton);

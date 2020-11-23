@@ -1,11 +1,12 @@
-﻿using SimpleInjector;
+﻿
+using SimpleInjector;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace LivestreamBot.Core.Modules
+namespace LivestreamBot.Core.DI
 {
     public static class ContainerExtensions
     {

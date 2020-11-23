@@ -1,9 +1,10 @@
-﻿using SimpleInjector;
+﻿
+using SimpleInjector;
 
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace LivestreamBot.Core.Modules
+namespace LivestreamBot.Core.DI
 {
     public interface IModule
     {

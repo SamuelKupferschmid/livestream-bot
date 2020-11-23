@@ -1,4 +1,5 @@
-﻿using LivestreamBot.Core.Modules;
+﻿using LivestreamBot.Core.DI;
+using LivestreamBot.Core.Environment;
 
 using SimpleInjector;
 
@@ -12,6 +13,7 @@ namespace LivestreamBot.Core
 
         public void Register(Container container, IList<Assembly> assemblies)
         {
+            container.Register(TimezoneInfoProvider.GetLocalTimeZoneInfo);
         }
     }
 }

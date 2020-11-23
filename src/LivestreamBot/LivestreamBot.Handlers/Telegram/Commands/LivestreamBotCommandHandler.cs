@@ -27,7 +27,7 @@ namespace LivestreamBot.Handlers.Telegram.Commands
             await this.botSubscriptionService.Subscribe(message.Chat.Id, NotificationNames.LivestreamNew, cancellationToken);
 
             var text = $"*Hallo {message.From.FirstName}!! 😊* Ab sofort werde ich mich hier mitteilen, wenn eine theologische Unterweisung auf Youtube 📺 zur Verfügung steht. Falls ich zu lästig werde, bin ich mit einem '/stop' sofort ruhig.";
-            await client.SendTextMessageAsync(message.Chat.Id, text , ParseMode.Markdown, cancellationToken: cancellationToken);
+            await client.SendTextMessageAsync(message.Chat.Id, text, ParseMode.Markdown, cancellationToken: cancellationToken);
         }
     }
 }

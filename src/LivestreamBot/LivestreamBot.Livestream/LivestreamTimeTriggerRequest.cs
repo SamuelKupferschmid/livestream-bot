@@ -21,10 +21,11 @@ namespace LivestreamBot.Livestream
     {
         private readonly ITableStorage<LivestreamNotification> tableStorage;
         private readonly IMediator mediator;
+        private readonly TimeZoneInfo timezoneInfo;
         private readonly YouTubeService service;
         private readonly string channelId;
 
-        public LivestreamTimeTriggerRequestHandler(ITableStorage<LivestreamNotification> tableStorage, IMediator mediator)
+        public LivestreamTimeTriggerRequestHandler(ITableStorage<LivestreamNotification> tableStorage, IMediator mediator, TimeZoneInfo timezoneInfo)
         {
             this.tableStorage = tableStorage;
             this.service = new YouTubeService(new BaseClientService.Initializer
@@ -34,11 +35,12 @@ namespace LivestreamBot.Livestream
 
             channelId = Environment.GetEnvironmentVariable("YoutubeChannelId");
             this.mediator = mediator;
+            this.timezoneInfo = timezoneInfo;
         }
 
         public async Task<Unit> Handle(LivestreamTimeTriggerRequest request, CancellationToken cancellationToken)
         {
-            var dateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Europe/Zurich"));
+            var dateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, this.timezoneInfo);
 
             var timeOfDay = dateTime.TimeOfDay;
 
@@ -94,7 +96,7 @@ namespace LivestreamBot.Livestream
         }
     }
 
-    public class LiveStreamNotificationInfo: INotification
+    public class LiveStreamNotificationInfo : INotification
     {
         public IList<SearchResult> SearchResults { get; set; }
         public IList<LivestreamNotification> ExistingNotifications { get; set; }

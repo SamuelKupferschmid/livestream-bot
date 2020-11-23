@@ -29,7 +29,7 @@ namespace LivestreamBot.Handlers.Livestream
 
         public async Task Handle(LiveStreamNotificationInfo info, CancellationToken cancellationToken)
         {
-            if(!IsMissing(info))
+            if (!IsMissing(info))
             {
                 return;
             }
