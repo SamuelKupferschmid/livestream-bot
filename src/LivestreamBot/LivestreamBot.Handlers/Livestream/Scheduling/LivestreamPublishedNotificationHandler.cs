@@ -1,5 +1,4 @@
 ﻿using LivestreamBot.Bot.Subscriptions;
-using LivestreamBot.Livestream;
 using LivestreamBot.Persistance;
 using MediatR;
 using System.Threading.Tasks;
@@ -8,6 +7,7 @@ using System;
 using Telegram.Bot.Types;
 using Telegram.Bot;
 using System.Linq;
+using LivestreamBot.Livestream.Notifications;
 
 namespace LivestreamBot.Handlers.Livestream.Scheduling
 {

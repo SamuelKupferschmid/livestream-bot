@@ -13,11 +13,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace LivestreamBot.Livestream
+namespace LivestreamBot.Livestream.Notifications
 {
-    public class LivestreamTimeTriggerRequest : IRequest { }
-
-    public class LivestreamTimeTriggerRequestHandler : IRequestHandler<LivestreamTimeTriggerRequest>
+    public class LivestreamSearchNotificationHandler : INotificationHandler<LivestreamTimeTriggerNotification>
     {
         private readonly ITableStorage<LivestreamNotification> tableStorage;
         private readonly IMediator mediator;
@@ -27,10 +25,10 @@ namespace LivestreamBot.Livestream
         private readonly YouTubeService service;
         private readonly string channelId;
 
-        public LivestreamTimeTriggerRequestHandler(ITableStorage<LivestreamNotification> tableStorage, IMediator mediator, TimeZoneInfo timezoneInfo, ILivestreamEventProvider eventProvider, IEnumerable<ILivestreamTimeTriggeredEventNotificationHandler> notificationHandlers)
+        public LivestreamSearchNotificationHandler(ITableStorage<LivestreamNotification> tableStorage, IMediator mediator, TimeZoneInfo timezoneInfo, ILivestreamEventProvider eventProvider, IEnumerable<ILivestreamTimeTriggeredEventNotificationHandler> notificationHandlers)
         {
             this.tableStorage = tableStorage;
-            this.service = new YouTubeService(new BaseClientService.Initializer
+            service = new YouTubeService(new BaseClientService.Initializer
             {
                 ApiKey = Environment.GetEnvironmentVariable("YoutubeApiKey")
             });
@@ -42,16 +40,16 @@ namespace LivestreamBot.Livestream
             this.notificationHandlers = notificationHandlers;
         }
 
-        public async Task<Unit> Handle(LivestreamTimeTriggerRequest request, CancellationToken cancellationToken)
+        public async Task Handle(LivestreamTimeTriggerNotification request, CancellationToken cancellationToken)
         {
-            var dateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, this.timezoneInfo);
-            var events = this.eventProvider.GetWeeklyEvents().ToList();
+            var dateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timezoneInfo);
+            var events = eventProvider.GetWeeklyEvents().ToList();
             var handlers = notificationHandlers.Max(handlers => handlers.NotifyBeforeLivestream);
             var timeUntilNextEvent = events.Min(ev => ev.GetLivestreamEventInfo(dateTime).untilNext);
 
             if (timeUntilNextEvent > handlers)
             {
-                return Unit.Value;
+                return;
             }
 
             var list = service.Search.List(new Google.Apis.Util.Repeatable<string>(new[] { "snippet" }));
@@ -63,9 +61,10 @@ namespace LivestreamBot.Livestream
             var searchResult = (await list.ExecuteAsync()).Items;
             var existingNotifications = tableStorage.Get().Where(n => n.DateTime > DateTime.UtcNow.AddHours(-4)).ToList();
 
-            foreach(var @event in events)
+            foreach (var @event in events)
             {
-                var info = new LiveStreamNotificationInfo {
+                var info = new LiveStreamNotificationInfo
+                {
                     Event = @event,
                     SearchResults = searchResult,
                     ExistingNotifications = existingNotifications,
@@ -74,8 +73,6 @@ namespace LivestreamBot.Livestream
 
                 await mediator.Publish(info, cancellationToken);
             }
-
-            return Unit.Value;
         }
     }
 }

@@ -14,7 +14,11 @@ namespace ChurchLiveStreamBot
         [FunctionName(nameof(LivestreamTimeTrigger))]
         public async Task LivestreamTimeTrigger([TimerTrigger("0 */5 * * * *")] TimerInfo timer, ILogger log, CancellationToken cancellationToken)
         {
-            await FunctionsContainer.Mediator.Send(new LivestreamTimeTriggerRequest(), cancellationToken);
+            await FunctionsContainer.Mediator.Publish(new LivestreamTimeTriggerNotification
+            {
+                Last = timer.ScheduleStatus.Last,
+                Next = timer.ScheduleStatus.Next,
+            }, cancellationToken);
         }
 
 

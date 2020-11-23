@@ -1,5 +1,6 @@
 ﻿using LivestreamBot.Core.DI;
 using LivestreamBot.Livestream.Events;
+using LivestreamBot.Livestream.Notifications;
 
 using SimpleInjector;
 
