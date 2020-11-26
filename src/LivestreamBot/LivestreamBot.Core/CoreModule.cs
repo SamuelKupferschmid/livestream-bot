@@ -14,6 +14,7 @@ namespace LivestreamBot.Core
         public void Register(Container container, IList<Assembly> assemblies)
         {
             container.Register(TimezoneInfoProvider.GetLocalTimeZoneInfo);
+            container.Register<IAppConfig, AppConfig>();
         }
     }
 }
