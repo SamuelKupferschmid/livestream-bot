@@ -1,4 +1,6 @@
 ﻿
+using LivestreamBot.Core.Environment;
+
 using System;
 
 namespace LivestreamBot.Bot
@@ -10,9 +12,9 @@ namespace LivestreamBot.Bot
 
     public class TelegramBotInfo : ITelegramBotInfo
     {
-        public TelegramBotInfo()
+        public TelegramBotInfo(IAppConfig appConfig)
         {
-            OwnerChatId = long.Parse(Environment.GetEnvironmentVariable("TelegramOwner"));
+            OwnerChatId = appConfig.TelegramOwner;
         }
 
         public long OwnerChatId { get; set; }

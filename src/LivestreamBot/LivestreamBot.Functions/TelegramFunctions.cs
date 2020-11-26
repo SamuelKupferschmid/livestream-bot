@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System.Threading;
 using Telegram.Bot.Types;
 using LivestreamBot.Handlers.Telegram.Webhooks;
+using LivestreamBot.Handlers.Telegram.Messages;
 
 namespace LivestreamBot.Functions
 {
@@ -22,17 +23,17 @@ namespace LivestreamBot.Functions
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var update = JsonConvert.DeserializeObject<Update>(requestBody);
 
-            await FunctionsContainer.Mediator.Send(new WebhookUpdate { Payload = update, Token = token }, cancellationToken);
+            await FunctionsMediator.Send(new WebhookUpdate { Payload = update, Token = token }, cancellationToken);
 
             return new OkResult();
         }
 
 #if DEBUG
         [FunctionName(nameof(Trigger))]
-        public Task Trigger([TimerTrigger("*/10 * * * * *", RunOnStartup = true)] TimerInfo timer, CancellationToken cancellationToken)
+        public async Task Trigger([TimerTrigger("*/10 * * * * *", RunOnStartup = true)] TimerInfo timer, CancellationToken cancellationToken)
         {
-            return Task.CompletedTask;
-            // await FunctionsContainer.Mediator.Send(new GetUpdatesRequest(), cancellationToken);
+            await FunctionsMediator.Send(new DeleteWebhookRequest(), cancellationToken);
+            await FunctionsMediator.Send(new GetUpdatesRequest(), cancellationToken);
         }
 #endif
 
@@ -40,14 +41,14 @@ namespace LivestreamBot.Functions
         [NoAutomaticTrigger]
         public async Task TelegramSetWebhookAsync(string input, CancellationToken cancellationToken)
         {
-            await FunctionsContainer.Mediator.Send(new SetWebhookRequest(), cancellationToken);
+            await FunctionsMediator.Send(new SetWebhookRequest(), cancellationToken);
         }
 
         [FunctionName(nameof(TelegramDeleteWebHookAsync))]
         [NoAutomaticTrigger]
         public async Task TelegramDeleteWebHookAsync(string input, CancellationToken cancellationToken)
         {
-            await FunctionsContainer.Mediator.Send(new DeleteWebhookRequest(), cancellationToken);
+            await FunctionsMediator.Send(new DeleteWebhookRequest(), cancellationToken);
         }
     }
 }

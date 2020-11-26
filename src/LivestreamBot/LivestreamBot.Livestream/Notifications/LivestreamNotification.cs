@@ -1,8 +1,9 @@
-﻿using Microsoft.Azure.Cosmos.Table;
+﻿
+using Microsoft.Azure.Cosmos.Table;
 
 using System;
 
-namespace LivestreamBot.Livestream
+namespace LivestreamBot.Livestream.Notifications
 {
     public class LivestreamNotification : TableEntity
     {

@@ -7,7 +7,7 @@ using MediatR;
 using System;
 using System.Collections.Generic;
 
-namespace LivestreamBot.Livestream
+namespace LivestreamBot.Livestream.Notifications
 {
     public class LiveStreamNotificationInfo : INotification
     {

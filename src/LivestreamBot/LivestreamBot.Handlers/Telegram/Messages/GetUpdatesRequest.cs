@@ -26,11 +26,17 @@ namespace LivestreamBot.Handlers.Telegram.Messages
 
         public async Task<Unit> Handle(GetUpdatesRequest request, CancellationToken cancellationToken)
         {
-            var updates = await botClient.GetUpdatesAsync(cancellationToken: cancellationToken);
-
-            foreach (var update in updates)
+            int offset = 0;
+            while (true)
             {
-                await mediator.Publish(new BotUpdate(update), cancellationToken);
+                var updates = await botClient.GetUpdatesAsync(offset, cancellationToken: cancellationToken);
+
+                foreach (var update in updates)
+                {
+                    offset = update.Id + 1;
+                    await mediator.Publish(new BotUpdate(update), cancellationToken);
+                }
+                await Task.Delay(1000);
             }
 
             return Unit.Value;

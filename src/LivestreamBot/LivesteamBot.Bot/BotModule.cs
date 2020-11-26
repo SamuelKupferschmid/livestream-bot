@@ -1,6 +1,7 @@
 ﻿
 using LivestreamBot.Bot.Subscriptions;
 using LivestreamBot.Core.DI;
+using LivestreamBot.Core.Environment;
 
 using SimpleInjector;
 
@@ -19,7 +20,7 @@ namespace LivestreamBot.Bot
         {
             container.Register<ITelegramBotClient>(() =>
             {
-                var token = Environment.GetEnvironmentVariable("TelegramToken");
+                var token = container.GetInstance<IAppConfig>().TelegramToken;
                 return new TelegramBotClient(token);
             });
 
