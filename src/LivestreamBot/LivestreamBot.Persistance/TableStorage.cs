@@ -1,4 +1,6 @@
-﻿using Microsoft.Azure.Cosmos.Table;
+﻿using LivestreamBot.Core.Environment;
+
+using Microsoft.Azure.Cosmos.Table;
 
 using System;
 using System.Linq;
@@ -22,11 +24,11 @@ namespace LivestreamBot.Persistance
         private readonly CloudTableClient client;
         private readonly CloudTable table;
 
-        public TableStorage()
+        public TableStorage(IAppConfig appConfig)
         {
             var entityName = typeof(TEntity).Name;
 
-            var account = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("AzureWebJobsStorage"));
+            var account = CloudStorageAccount.Parse(appConfig.AzureWebJobsStorage);
             this.client = account.CreateCloudTableClient();
 
             this.table = client.GetTableReference(entityName);

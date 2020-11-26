@@ -51,18 +51,4 @@ namespace LivestreamBot.Functions
             }
         }
     }
-
-
-    public class FunctionsModule : IModule
-    {
-        public void Register(Container container, IList<Assembly> assemblies)
-        {
-            var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(directory)
-                .AddJsonFile("local.settings.json", true);
-
-            container.RegisterInstance<IConfiguration>(builder.Build());
-        }
-    }
 }

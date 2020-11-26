@@ -1,4 +1,6 @@
 ﻿
+using LivestreamBot.Core.Environment;
+
 using MediatR;
 
 using System;
@@ -17,18 +19,18 @@ namespace LivestreamBot.Handlers.Telegram.Webhooks
 
     public class WebhookUpdateHandler : IRequestHandler<WebhookUpdate>
     {
-        private readonly string token;
+        private readonly IAppConfig appConfig;
         private readonly IMediator mediator;
 
-        public WebhookUpdateHandler(IMediator mediator)
+        public WebhookUpdateHandler(IMediator mediator, IAppConfig appConfig)
         {
-            token = Environment.GetEnvironmentVariable("TelegramToken");
             this.mediator = mediator;
+            this.appConfig = appConfig;
         }
 
         public async Task<Unit> Handle(WebhookUpdate request, CancellationToken cancellationToken)
         {
-            if (request.Token != token)
+            if (request.Token != appConfig.TelegramToken)
             {
                 // Throw proprer unauthorized Exception
                 throw new Exception();

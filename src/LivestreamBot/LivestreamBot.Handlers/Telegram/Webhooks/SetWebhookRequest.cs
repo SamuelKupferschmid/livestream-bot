@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using LivestreamBot.Core.Environment;
+
+using MediatR;
 
 using System;
 using System.Threading;
@@ -13,17 +15,16 @@ namespace LivestreamBot.Handlers.Telegram.Webhooks
     public class SetWebhookRequestHandler : IRequestHandler<SetWebhookRequest>
     {
         private readonly ITelegramBotClient client;
-        public SetWebhookRequestHandler(ITelegramBotClient client)
+        private readonly IAppConfig appConfig;
+        public SetWebhookRequestHandler(ITelegramBotClient client, IAppConfig appConfig)
         {
             this.client = client;
+            this.appConfig = appConfig;
         }
 
         public async Task<Unit> Handle(SetWebhookRequest request, CancellationToken cancellationToken)
         {
-            var baseurl = Environment.GetEnvironmentVariable("BaseUrl");
-            var token = Environment.GetEnvironmentVariable("TelegramToken");
-
-            var url = $"{baseurl}/api/telegram-webhook/{token}";
+            var url = $"{appConfig.Host}/api/telegram-webhook/{appConfig.TelegramToken}";
             await client.SetWebhookAsync(url, cancellationToken: cancellationToken);
             return Unit.Value;
         }

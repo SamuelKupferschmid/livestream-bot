@@ -1,7 +1,7 @@
-﻿using Google.Apis.Services;
-using Google.Apis.YouTube.v3;
+﻿using Google.Apis.YouTube.v3;
 
 using LivestreamBot.Core;
+using LivestreamBot.Core.Environment;
 using LivestreamBot.Livestream.Events;
 using LivestreamBot.Persistance;
 
@@ -25,19 +25,22 @@ namespace LivestreamBot.Livestream.Notifications
         private readonly YouTubeService service;
         private readonly string channelId;
 
-        public LivestreamSearchNotificationHandler(ITableStorage<LivestreamNotification> tableStorage, IMediator mediator, TimeZoneInfo timezoneInfo, ILivestreamEventProvider eventProvider, IEnumerable<ILivestreamTimeTriggeredEventNotificationHandler> notificationHandlers)
+        public LivestreamSearchNotificationHandler(ITableStorage<LivestreamNotification> tableStorage,
+                                                   IMediator mediator,
+                                                   TimeZoneInfo timezoneInfo,
+                                                   ILivestreamEventProvider eventProvider,
+                                                   IEnumerable<ILivestreamTimeTriggeredEventNotificationHandler> notificationHandlers,
+                                                   YouTubeService service,
+                                                   IAppConfig appConfig)
         {
             this.tableStorage = tableStorage;
-            service = new YouTubeService(new BaseClientService.Initializer
-            {
-                ApiKey = Environment.GetEnvironmentVariable("YoutubeApiKey")
-            });
 
-            channelId = Environment.GetEnvironmentVariable("YoutubeChannelId");
+            channelId = appConfig.YoutubeChannelId;
             this.mediator = mediator;
             this.timezoneInfo = timezoneInfo;
             this.eventProvider = eventProvider;
             this.notificationHandlers = notificationHandlers;
+            this.service = service;
         }
 
         public async Task Handle(LivestreamTimeTriggerNotification request, CancellationToken cancellationToken)
