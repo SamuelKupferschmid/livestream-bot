@@ -2,7 +2,6 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using LivestreamBot.Functions;
-using LivestreamBot.Livestream;
 using LivestreamBot.Livestream.Notifications;
 
 using Microsoft.Azure.WebJobs;

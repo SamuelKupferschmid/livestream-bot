@@ -1,24 +1,11 @@
 ﻿using Google.Apis.Auth.OAuth2;
-using Google.Apis.Auth.OAuth2.Flows;
-using Google.Apis.Auth.OAuth2.Requests;
-using Google.Apis.Auth.OAuth2.Responses;
-using Google.Apis.Auth.OAuth2.Web;
-using Google.Apis.Util;
 using Google.Apis.Util.Store;
-using Google.Apis.YouTube.v3;
-using Google.Apis.YouTube.v3.Data;
 
 using LivestreamBot.Core.DI;
-using LivestreamBot.Core;
 
 using SimpleInjector;
-
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
 using LivestreamBot.Auth.Google;
 using LivestreamBot.Core.Environment;
 

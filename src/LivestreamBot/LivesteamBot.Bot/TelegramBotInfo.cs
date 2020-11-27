@@ -1,8 +1,6 @@
 ﻿
 using LivestreamBot.Core.Environment;
 
-using System;
-
 namespace LivestreamBot.Bot
 {
     public interface ITelegramBotInfo

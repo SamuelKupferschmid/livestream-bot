@@ -3,9 +3,6 @@
 using LivestreamBot.Core.Environment;
 using LivestreamBot.Handlers.Telegram.Commands;
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 
 using Telegram.Bot;

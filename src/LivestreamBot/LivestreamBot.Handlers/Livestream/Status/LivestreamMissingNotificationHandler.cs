@@ -1,6 +1,5 @@
 ﻿using LivestreamBot.Bot.Subscriptions;
 using LivestreamBot.Persistance;
-using LivestreamBot.Livestream.Events;
 using MediatR;
 
 using System;

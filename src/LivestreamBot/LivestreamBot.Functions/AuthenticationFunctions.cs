@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 using LivestreamBot.Functions;
 using LivestreamBot.Handlers.Livestream.Authorization;
-using LivestreamBot.Livestream.Notifications;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

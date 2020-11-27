@@ -1,16 +1,10 @@
-﻿using Google.Apis.Auth.OAuth2;
-using Google.Apis.Services;
-using Google.Apis.YouTube.v3;
-
+﻿
 using LivestreamBot.Core.DI;
-using LivestreamBot.Core.Environment;
 using LivestreamBot.Livestream.Events;
 using LivestreamBot.Livestream.Notifications;
-using LivestreamBot.Livestream.Scheduling;
 
 using SimpleInjector;
 
-using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -24,7 +18,7 @@ namespace LivestreamBot.Livestream
             container.Collection.Register<ILivestreamTimeTriggeredEventNotificationHandler>(assemblies);
 
             container.Register<IYoutubeServiceProvider, YoutubeServiceProvider>();
-            container.Register(() => container.GetInstance<IYoutubeServiceProvider>().GetDefaultService());
+            container.Register(() => container.GetInstance<IYoutubeServiceProvider>().GetDefaultService(), Lifestyle.Scoped);
         }
     }
 }

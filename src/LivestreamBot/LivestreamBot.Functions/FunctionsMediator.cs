@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -8,8 +7,6 @@ using System.Threading.Tasks;
 using LivestreamBot.Core.DI;
 
 using MediatR;
-
-using Microsoft.Extensions.Configuration;
 
 using SimpleInjector;
 using SimpleInjector.Lifestyles;
