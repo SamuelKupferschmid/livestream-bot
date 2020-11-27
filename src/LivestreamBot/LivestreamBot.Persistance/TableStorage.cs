@@ -2,7 +2,6 @@
 
 using Microsoft.Azure.Cosmos.Table;
 
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,6 +36,7 @@ namespace LivestreamBot.Persistance
 
         public async Task InsertOrMergeAsync(TEntity entity)
         {
+            // TODO pass CancellationToken
             TableOperation operation = TableOperation.InsertOrMerge(entity);
             await table.ExecuteAsync(operation);
         }

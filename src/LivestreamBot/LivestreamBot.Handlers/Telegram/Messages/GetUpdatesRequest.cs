@@ -26,8 +26,9 @@ namespace LivestreamBot.Handlers.Telegram.Messages
 
         public async Task<Unit> Handle(GetUpdatesRequest request, CancellationToken cancellationToken)
         {
+            int rounds = 2;
             int offset = 0;
-            while (true)
+            while (rounds-- > 0)
             {
                 var updates = await botClient.GetUpdatesAsync(offset, cancellationToken: cancellationToken);
 

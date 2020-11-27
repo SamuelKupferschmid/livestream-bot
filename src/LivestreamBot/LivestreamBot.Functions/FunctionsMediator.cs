@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -8,8 +7,6 @@ using System.Threading.Tasks;
 using LivestreamBot.Core.DI;
 
 using MediatR;
-
-using Microsoft.Extensions.Configuration;
 
 using SimpleInjector;
 using SimpleInjector.Lifestyles;
@@ -43,11 +40,11 @@ namespace LivestreamBot.Functions
             }
         }
 
-        public static async Task Send<TResponse>(IRequest<TResponse> request, CancellationToken cancellationToken)
+        public static async Task<TResponse> Send<TResponse>(IRequest<TResponse> request, CancellationToken cancellationToken)
         {
             using (AsyncScopedLifestyle.BeginScope(container))
             {
-                await container.GetInstance<IMediator>().Send(request, cancellationToken);
+                return await container.GetInstance<IMediator>().Send(request, cancellationToken);
             }
         }
     }

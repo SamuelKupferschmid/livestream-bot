@@ -6,12 +6,15 @@
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.1.0" />
     <PackageReference Include="SimpleInjector" Version="5.1.0" />
     <PackageReference Include="Telegram.Bot" Version="15.7.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\LivesteamBot.Bot\LivestreamBot.Bot.csproj" />
+    <ProjectReference Include="..\LivestreamBot.Auth\LivestreamBot.Auth.csproj" />
     <ProjectReference Include="..\LivestreamBot.Livestream\LivestreamBot.Livestream.csproj" />
   </ItemGroup>
 

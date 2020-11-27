@@ -5,7 +5,6 @@ using LivestreamBot.Core.Environment;
 
 using SimpleInjector;
 
-using System;
 using System.Collections.Generic;
 using System.Reflection;
 
