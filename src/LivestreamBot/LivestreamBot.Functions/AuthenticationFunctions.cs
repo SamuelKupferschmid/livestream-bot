@@ -12,16 +12,19 @@ using Microsoft.Extensions.Logging;
 
 namespace ChurchLiveStreamBot
 {
-    public class AuthenticationFunctions
+    public class AuthenticationFunctions : FuncionsBase
     {
+        public AuthenticationFunctions(ILoggerFactory loggerFactory) : base(loggerFactory) { }
+
         [FunctionName(nameof(Authorize))]
         public async Task<IActionResult> Authorize([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "authorize/{chatId}")] HttpRequest req,
                                                string chatId,
                                                ILogger log,
                                                CancellationToken cancellationToken)
         {
-            return await FunctionsMediator.Send(new AuthorizeChatRequest { 
-                ChatId = chatId 
+            return await Send(new AuthorizeChatRequest
+            {
+                ChatId = chatId
             }, cancellationToken);
         }
 
@@ -33,9 +36,10 @@ namespace ChurchLiveStreamBot
             var code = req.Query["code"];
             var chatId = long.Parse(req.Query["state"]);
             var error = req.Query["error"];
-            return await FunctionsMediator.Send(new AuthorizationCallbackRequest { 
-                ChatId = chatId, 
-                Code = code ,
+            return await Send(new AuthorizationCallbackRequest
+            {
+                ChatId = chatId,
+                Code = code,
                 Error = error,
             }, cancellationToken);
         }

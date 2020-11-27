@@ -13,8 +13,10 @@ using LivestreamBot.Handlers.Telegram.Messages;
 
 namespace LivestreamBot.Functions
 {
-    public class TelegramFunctions
+    public class TelegramFunctions : FuncionsBase
     {
+        public TelegramFunctions(ILoggerFactory loggerFactory) : base(loggerFactory) { }
+
         [FunctionName(nameof(TelegramWebhook))]
         public async Task<IActionResult> TelegramWebhook(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = "telegram-webhook/{token}")] HttpRequest req, string token,
@@ -23,7 +25,7 @@ namespace LivestreamBot.Functions
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var update = JsonConvert.DeserializeObject<Update>(requestBody);
 
-            await FunctionsMediator.Send(new WebhookUpdate { Payload = update, Token = token }, cancellationToken);
+            await Send(new WebhookUpdate { Payload = update, Token = token }, cancellationToken);
 
             return new OkResult();
         }
@@ -32,8 +34,8 @@ namespace LivestreamBot.Functions
         [FunctionName(nameof(Trigger))]
         public async Task Trigger([TimerTrigger("*/10 * * * * *", RunOnStartup = true)] TimerInfo timer, CancellationToken cancellationToken)
         {
-            await FunctionsMediator.Send(new DeleteWebhookRequest(), cancellationToken);
-            await FunctionsMediator.Send(new GetUpdatesRequest(), cancellationToken);
+            await Send(new DeleteWebhookRequest(), cancellationToken);
+            await Send(new GetUpdatesRequest(), cancellationToken);
         }
 #endif
 
@@ -41,14 +43,14 @@ namespace LivestreamBot.Functions
         [NoAutomaticTrigger]
         public async Task TelegramSetWebhookAsync(string input, CancellationToken cancellationToken)
         {
-            await FunctionsMediator.Send(new SetWebhookRequest(), cancellationToken);
+            await Send(new SetWebhookRequest(), cancellationToken);
         }
 
         [FunctionName(nameof(TelegramDeleteWebHookAsync))]
         [NoAutomaticTrigger]
         public async Task TelegramDeleteWebHookAsync(string input, CancellationToken cancellationToken)
         {
-            await FunctionsMediator.Send(new DeleteWebhookRequest(), cancellationToken);
+            await Send(new DeleteWebhookRequest(), cancellationToken);
         }
     }
 }

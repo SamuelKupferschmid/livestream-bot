@@ -17,7 +17,7 @@ namespace LivestreamBot.Handlers.Telegram
             this.client = client;
         }
 
-        protected override bool Predicate(BotUpdate update) => update.Update?.Message.Type == MessageType.ChatMembersAdded && update.Update.Message.NewChatMembers.Any(m => m.Id == client.BotId);
+        protected override bool Predicate(BotUpdate update) => update.Update.Type == UpdateType.Message && update.Update.Message.Type == MessageType.ChatMembersAdded && update.Update.Message.NewChatMembers.Any(m => m.Id == client.BotId);
 
         public override async Task HandleUpdate(BotUpdate update, CancellationToken cancellationToken)
         {
