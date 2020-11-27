@@ -37,6 +37,7 @@ namespace LivestreamBot.Persistance
 
         public async Task InsertOrMergeAsync(TEntity entity)
         {
+            // TODO pass CancellationToken
             TableOperation operation = TableOperation.InsertOrMerge(entity);
             await table.ExecuteAsync(operation);
         }

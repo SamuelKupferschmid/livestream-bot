@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LivestreamBot.Auth\LivestreamBot.Auth.csproj" />
     <ProjectReference Include="..\LivestreamBot.Persistance\LivestreamBot.Persistance.csproj" />
   </ItemGroup>
 

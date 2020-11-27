@@ -11,6 +11,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LivesteamBot.Bot\LivestreamBot.Bot.csproj" />
+    <ProjectReference Include="..\LivestreamBot.Auth\LivestreamBot.Auth.csproj" />
     <ProjectReference Include="..\LivestreamBot.Core\LivestreamBot.Core.csproj" />
     <ProjectReference Include="..\LivestreamBot.Handlers\LivestreamBot.Handlers.csproj" />
     <ProjectReference Include="..\LivestreamBot.Livestream\LivestreamBot.Livestream.csproj" />
