@@ -31,7 +31,11 @@ namespace LivestreamBot.Persistance
             this.client = account.CreateCloudTableClient();
 
             this.table = client.GetTableReference(entityName);
-            this.table.CreateIfNotExists();
+
+            if (!this.table.Exists())
+            {
+                this.table.CreateIfNotExists();
+            }
         }
 
         public async Task InsertOrMergeAsync(TEntity entity)
