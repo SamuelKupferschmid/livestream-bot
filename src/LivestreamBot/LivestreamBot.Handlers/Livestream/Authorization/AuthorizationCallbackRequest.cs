@@ -78,27 +78,29 @@ namespace LivestreamBot.Handlers.Livestream.Authorization
                 new KeyValuePair<string, string>("grant_type", "authorization_code"),
             });
 
-            logger.LogInformation("retrieving OAuth2 Tokens from Google API for ChatId {ChatId}", request.ChatId);
+            this.logger.LogInformation("retrieving OAuth2 Tokens from Google API for ChatId {ChatId}", request.ChatId);
 
             var response = await http.PostAsync($"https://oauth2.googleapis.com/token", formContent, cancellationToken);
+            var content = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
             {
-                logger.LogError("retrieving OAuth Tokens failed with HTTP Code {code}, with Reason {reason}", response.StatusCode,response.ReasonPhrase);
+                this.logger.LogError("retrieving OAuth Tokens failed with HTTP Code {code}, with Reason {reason}. Content: {content}", response.StatusCode,response.ReasonPhrase, content);
             }
 
 
-            var token = JsonConvert.DeserializeObject<TokenResponse>(await response.Content.ReadAsStringAsync());
+            var token = JsonConvert.DeserializeObject<TokenResponse>(content);
 
             await this.authorizationService.CreateChatCredentials(request.ChatId, token, AuthorizationScope.Fullaccess, cancellationToken);
 
             var channels = await GetChannels(request.ChatId, cancellationToken);
 
-            var buttons = channels.Select(channel => new InlineKeyboardButton {
+            var buttons = channels.Select(channel => new InlineKeyboardButton
+            {
                 Text = channel.Snippet.Title,
                 CallbackData = $"setchannel: {channel.Id}"
-            }); 
-            
+            });
+
             var keyboard = new InlineKeyboardMarkup(buttons.Select(button => new InlineKeyboardButton[] { button }));
 
             await botClient.SendTextMessageAsync(request.ChatId,
