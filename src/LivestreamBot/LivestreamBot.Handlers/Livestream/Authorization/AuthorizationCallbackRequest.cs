@@ -62,6 +62,10 @@ namespace LivestreamBot.Handlers.Livestream.Authorization
             {
                 throw new InvalidOperationException($"Goolge API Authorization led to an Error: {request.Error}");
             }
+
+            if (request.Code == null) throw new ArgumentNullException(nameof(request.Code));
+            if (request.ChatId == 0) throw new ArgumentOutOfRangeException(nameof(request.ChatId));
+
             using var http = new HttpClient();
             var redirect = $"{this.appConfig.Host}/api/oauth2callback";
 
@@ -74,9 +78,15 @@ namespace LivestreamBot.Handlers.Livestream.Authorization
                 new KeyValuePair<string, string>("grant_type", "authorization_code"),
             });
 
-            logger.LogInformation("fetch OAuth2 Tokens from Google API for ChatId {ChatId}", request.ChatId);
+            logger.LogInformation("retrieving OAuth2 Tokens from Google API for ChatId {ChatId}", request.ChatId);
 
             var response = await http.PostAsync($"https://oauth2.googleapis.com/token", formContent, cancellationToken);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                logger.LogError("retrieving OAuth Tokens failed with HTTP Code {code}, with Reason {reason}", response.StatusCode,response.ReasonPhrase);
+            }
+
 
             var token = JsonConvert.DeserializeObject<TokenResponse>(await response.Content.ReadAsStringAsync());
 
