@@ -86,7 +86,7 @@ namespace LivestreamBot.Handlers.Livestream.Authorization
 
             var buttons = channels.Select(channel => new InlineKeyboardButton {
                 Text = channel.Snippet.Title,
-                CallbackData = $"/setchannel {channel.Id}"
+                CallbackData = $"setchannel: {channel.Id}"
             }); 
             
             var keyboard = new InlineKeyboardMarkup(buttons.Select(button => new InlineKeyboardButton[] { button }));

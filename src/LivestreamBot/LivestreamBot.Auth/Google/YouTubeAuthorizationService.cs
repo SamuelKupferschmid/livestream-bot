@@ -31,12 +31,12 @@ namespace LivestreamBot.Auth.Google
 
     public class YouTubeAuthorizationService : IYouTubeAuthorizationService
     {
-        private readonly ITableStorage<ChatAuthorizations> tableStorage;
+        private readonly ITableStorage<ChatAuthorization> tableStorage;
         private readonly IDataStore dataStore;
         private readonly ClientSecrets clientSecrets;
         private readonly IAppConfig appConfig;
 
-        public YouTubeAuthorizationService(IDataStore dataStore, ClientSecrets clientSecrets, IAppConfig appConfig, ITableStorage<ChatAuthorizations> tableStorage)
+        public YouTubeAuthorizationService(IDataStore dataStore, ClientSecrets clientSecrets, IAppConfig appConfig, ITableStorage<ChatAuthorization> tableStorage)
         {
             this.dataStore = dataStore;
             this.clientSecrets = clientSecrets;
@@ -46,7 +46,7 @@ namespace LivestreamBot.Auth.Google
 
         public async Task CreateChatCredentials(long chatId, TokenResponse token, AuthorizationScope scope, CancellationToken cancellationToken)
         {
-            var item = new ChatAuthorizations
+            var item = new ChatAuthorization
             {
                 ChatId = chatId,
                 AccessToken = token.AccessToken,
