@@ -12,9 +12,9 @@ namespace LivestreamBot.Auth.Google
 {
     public class TokenResponseStore : IDataStore
     {
-        private readonly ITableStorage<ChatAuthorizations> chatAuthorizations;
+        private readonly ITableStorage<ChatAuthorization> chatAuthorizations;
 
-        public TokenResponseStore(ITableStorage<ChatAuthorizations> chatAuthorizations)
+        public TokenResponseStore(ITableStorage<ChatAuthorization> chatAuthorizations)
         {
             this.chatAuthorizations = chatAuthorizations;
         }

@@ -4,13 +4,13 @@ using System;
 
 namespace LivestreamBot.Auth
 {
-    public class ChatAuthorizations : TableEntity
+    public class ChatAuthorization : TableEntity
     {
         private long chatId;
 
-        public ChatAuthorizations()
+        public ChatAuthorization()
         {
-            PartitionKey = nameof(ChatAuthorizations);
+            PartitionKey = nameof(ChatAuthorization);
         }
 
         public long ChatId

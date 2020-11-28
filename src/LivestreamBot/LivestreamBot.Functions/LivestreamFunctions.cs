@@ -9,12 +9,15 @@ using Microsoft.Extensions.Logging;
 
 namespace ChurchLiveStreamBot
 {
-    public class LivestreamFunctions
+    public class LivestreamFunctions : FuncionsBase
+
     {
+        public LivestreamFunctions(ILoggerFactory loggerFactory) : base(loggerFactory) { }
+
         [FunctionName(nameof(LivestreamTimeTrigger))]
         public async Task LivestreamTimeTrigger([TimerTrigger("0 */5 * * * *", RunOnStartup = true)] TimerInfo timer, ILogger log, CancellationToken cancellationToken)
         {
-            await FunctionsMediator.Publish(new LivestreamTimeTriggerNotification
+            await Publish(new LivestreamTimeTriggerNotification
             {
                 Last = timer.ScheduleStatus.Last,
                 Next = timer.ScheduleStatus.Next,

@@ -5,20 +5,29 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using LivestreamBot.Core.DI;
+using LivestreamBot.Core.Logger;
 
 using MediatR;
+
+using Microsoft.Extensions.Logging;
 
 using SimpleInjector;
 using SimpleInjector.Lifestyles;
 
 namespace LivestreamBot.Functions
 {
-    public static class FunctionsMediator
+    public class FuncionsBase
     {
         private static readonly Container container;
         private static readonly string assemblyPrefix = "LivestreamBot.";
+        private static readonly IAsyncAwareLoggerFactory loggerFactory = new AsyncAwareLoggerFactory();
 
-        static FunctionsMediator()
+        public FuncionsBase(ILoggerFactory factory)
+        {
+            loggerFactory.Factory = factory;
+        }
+
+        static FuncionsBase()
         {
             container = new Container();
             container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
@@ -29,10 +38,13 @@ namespace LivestreamBot.Functions
 
             container.RegisterModules(assemblies);
 
-            container.Verify();
+
+            container.Register<ILoggerFactory>(() => loggerFactory, Lifestyle.Singleton);
+
+            // container.Verify();
         }
 
-        public static async Task Publish<TNotification>(TNotification notification, CancellationToken cancellationToken)
+        public async Task Publish<TNotification>(TNotification notification, CancellationToken cancellationToken)
         {
             using (AsyncScopedLifestyle.BeginScope(container))
             {
@@ -40,7 +52,7 @@ namespace LivestreamBot.Functions
             }
         }
 
-        public static async Task<TResponse> Send<TResponse>(IRequest<TResponse> request, CancellationToken cancellationToken)
+        public async Task<TResponse> Send<TResponse>(IRequest<TResponse> request, CancellationToken cancellationToken)
         {
             using (AsyncScopedLifestyle.BeginScope(container))
             {

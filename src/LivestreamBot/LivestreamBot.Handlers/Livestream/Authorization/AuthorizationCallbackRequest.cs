@@ -10,9 +10,11 @@ using LivestreamBot.Livestream;
 using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 using Newtonsoft.Json;
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -39,20 +41,27 @@ namespace LivestreamBot.Handlers.Livestream.Authorization
         private readonly IYouTubeAuthorizationService authorizationService;
         private readonly IYoutubeServiceProvider youtubeServiceProvider;
         private readonly ITelegramBotClient botClient;
+        private readonly ILogger<AuthorizationCallbackRequestHandler> logger;
 
         public AuthorizationCallbackRequestHandler(IAppConfig appConfig,
                                                    IYouTubeAuthorizationService authorizationService,
                                                    IYoutubeServiceProvider youtubeServiceProvider,
-                                                   ITelegramBotClient botClient)
+                                                   ITelegramBotClient botClient,
+                                                   ILogger<AuthorizationCallbackRequestHandler> logger)
         {
             this.appConfig = appConfig;
             this.authorizationService = authorizationService;
             this.youtubeServiceProvider = youtubeServiceProvider;
             this.botClient = botClient;
+            this.logger = logger;
         }
 
         public async Task<IActionResult> Handle(AuthorizationCallbackRequest request, CancellationToken cancellationToken)
         {
+            if(request.Error != null)
+            {
+                throw new InvalidOperationException($"Goolge API Authorization led to an Error: {request.Error}");
+            }
             using var http = new HttpClient();
             var redirect = $"{this.appConfig.Host}/api/oauth2callback";
 
@@ -65,6 +74,8 @@ namespace LivestreamBot.Handlers.Livestream.Authorization
                 new KeyValuePair<string, string>("grant_type", "authorization_code"),
             });
 
+            logger.LogInformation("fetch OAuth2 Tokens from Google API for ChatId {ChatId}", request.ChatId);
+
             var response = await http.PostAsync($"https://oauth2.googleapis.com/token", formContent, cancellationToken);
 
             var token = JsonConvert.DeserializeObject<TokenResponse>(await response.Content.ReadAsStringAsync());
@@ -75,7 +86,7 @@ namespace LivestreamBot.Handlers.Livestream.Authorization
 
             var buttons = channels.Select(channel => new InlineKeyboardButton {
                 Text = channel.Snippet.Title,
-                CallbackData = $"/setchannel {channel.Id}"
+                CallbackData = $"setchannel: {channel.Id}"
             }); 
             
             var keyboard = new InlineKeyboardMarkup(buttons.Select(button => new InlineKeyboardButton[] { button }));
