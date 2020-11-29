@@ -21,7 +21,7 @@ namespace LivestreamBot.Livestream.Events
                 LocalEventStart = new TimeSpan(10, 30, 00),
                 LivestreamEventStart = new TimeSpan(10, 45, 00),
                 LivestreamEventEnd = new TimeSpan(11, 45, 00),
-                LivestreamAnnouncmentLead = new TimeSpan(04, 00, 00),
+                LivestreamAnnouncmentLead = new TimeSpan(02, 30, 00),
             };
 
             eveningService = new LivestreamEvent
@@ -31,7 +31,7 @@ namespace LivestreamBot.Livestream.Events
                 LocalEventStart = new TimeSpan(19, 00, 00),
                 LivestreamEventStart = new TimeSpan(19, 15, 00),
                 LivestreamEventEnd = new TimeSpan(20, 15, 00),
-                LivestreamAnnouncmentLead = new TimeSpan(04, 00, 00),
+                LivestreamAnnouncmentLead = new TimeSpan(06, 00, 00),
         };
         }
 
