@@ -2,6 +2,7 @@
 using LivestreamBot.Core.DI;
 using LivestreamBot.Livestream.Events;
 using LivestreamBot.Livestream.Notifications;
+using LivestreamBot.Livestream.Scheduling;
 
 using SimpleInjector;
 
@@ -15,6 +16,8 @@ namespace LivestreamBot.Livestream
         public void Register(Container container, IList<Assembly> assemblies)
         {
             container.Register<ILivestreamEventProvider, LivestreamEventProvider>();
+            container.Register<ISchedulingService, SchedulingService>();
+
             container.Collection.Register<ILivestreamTimeTriggeredEventNotificationHandler>(assemblies);
 
             container.Register<IYoutubeServiceProvider, YoutubeServiceProvider>();
